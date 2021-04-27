@@ -1,0 +1,170 @@
+<h4>Formularios <small> Reactivos </small></h4>
+<hr>
+<form autocomplete="off" [formGroup]="forma" (ngSubmit)="guardar()">
+
+  <div>
+
+    <div class="form-group row my-3">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col">
+
+        <input class="form-control"
+               type="text"
+               placeholder="Nombre"
+               formControlName="nombre"
+               [class.is-invalid]="nombreInvalid">
+               <small *ngIf="nombreInvalid" class="text-danger">Ingrese 6 dígitos</small>
+      </div>
+    </div>
+
+    <div class="form-group row my-3">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col">
+
+        <input class="form-control"
+               type="text"
+               placeholder="Apellido"
+               formControlName="apellido"
+               [class.is-invalid]="apellidoInvalid">
+               <small *ngIf="apellidoInvalid" class="text-danger">Ingrese 6 dígitos</small>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label my-3">Correo</label>
+    <div class="col">
+
+      <input class="form-control"
+             type="email"
+             placeholder="Correo electrónico"
+             [class.is-invalid]="emailInvalid"
+             formControlName="email"
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+             <small *ngIf="emailInvalid" class="text-danger">Ingrese un email correcto</small>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label my-3">Password</label>
+    <div class="col">
+
+      <input class="form-control"
+             type="password"
+             placeholder="Contraseña"
+             [class.is-invalid]="pass1Invalid"
+             formControlName="password1">
+             <small *ngIf="pass1Invalid" class="text-danger">Ingrese un password correcto</small>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label my-3">Repita Password</label>
+    <div class="col">
+
+      <input class="form-control"
+             type="password"
+             placeholder="Contraseña"
+             [class.is-invalid]="pass2Invalid"
+             formControlName="password2">
+             <small *ngIf="pass2Invalid" class="text-danger">Ingrese un password correcto</small>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label my-3">Usuario</label>
+    <div class="col">
+
+      <input class="form-control"
+             type="text"
+             placeholder="Nombre Usuario"
+             [class.is-invalid]="usuarioNoValido"
+             formControlName="usuario">
+             <small *ngIf="usuarioNoValido" class="text-danger">Usuario Existente</small>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Con formgroupName le digo que esa etiqueta contendra los valores del arreglo de direccion 
+       Los hijos deben tener el atributo formControlName -->
+  <div class="form-group row" formGroupName="direccion">
+    <label class="col-12 col-form-label my-3 text-center">Direccion</label>
+      <div class="col">
+        <input class="form-control" placeholder="Partido" formControlName="partido">
+        <small *ngIf="partidoInvalid" class="text-danger">Ingrese Partido</small>
+      </div>
+      
+      <div class="col">
+        <input class="form-control" placeholder="Ciudad" formControlName="ciudad">
+        <small *ngIf="ciudadInvalid" class="text-danger">Ingrese Ciudad</small>
+      </div>
+      
+      <div class="col">
+        <input class="form-control" placeholder="Calle" formControlName="calle">
+        <small *ngIf="calleInvalid" class="text-danger">Ingrese Calle</small>
+      </div>
+      
+  </div>
+
+  <div class="container">
+  <div class="row">
+  <table class="table table-striped table-dark my-5">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Pasatiempo</th>
+        <th>Borrar</th>
+      </tr>
+    </thead>
+    <tbody formArrayName="pasatiempos">
+      <tr *ngFor="let x of pasatiempos.controls; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>
+          <input class="form-control" type="text" [formControlName]="i">
+        </td>
+        <td>
+          <button (click)="borrarPasatiempo( i )" class="btn btn-danger">Borrar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+  <button (click)="agregarPasatiempo()" class="btn btn-outline-primary btn-block">
+    Agregar
+  </button>
+
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary btn-block">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+</form>
+
+
+<hr>
+<pre>
+  Estado del formulario: {{ forma.valid }}
+  <br>
+  Status: {{ forma.status }}
+
+</pre>
+
+<pre>
+ {{ forma.value | json }}
+  
+</pre>
